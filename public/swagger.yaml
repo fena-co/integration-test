@@ -1,0 +1,502 @@
+openapi: 3.0.1
+info:
+  title: fenaPublicAPI
+  description: defaultDescription
+  version: '0.1'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    secret_key:
+      type: apiKey
+      in: header
+      name: secret_key
+    integration_id:
+      type: apiKey
+      in: header
+      name: integration_id
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+security:
+  - secret_key: []
+    integration_id: []
+paths:
+  /public/payments/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Payment ID
+        required: true
+        schema:
+          type: string
+    get:
+      description: Get payment data with its id in request params
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/payments/edit:
+    post:
+      description: Edit payment data with "_id" in request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                invoiceRefNumber:
+                  type: string
+                _id:
+                  type: string
+            examples:
+              '0':
+                value:
+                  {
+                    '_id': 'payment-id',
+                    'amount': 'amount',
+                    'invoiceRefNumber': 'invoiceRefNumber',
+                  }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/payments/{id}/process:
+    post:
+      description: Process payment with {id} in request params
+      parameters:
+        - name: id
+          in: path
+          description: Payment ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              '0':
+                value: {}
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/payments/create:
+    post:
+      description: Create payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                invoiceRefNumber:
+                  type: string
+            examples:
+              '0':
+                value:
+                  { 'amount': 'amount', 'invoiceRefNumber': 'invoiceRefNumber' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/payments/list:
+    get:
+      description: Get list of all payments
+
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/payments/{id}/delete:
+    post:
+      description: Delete payment with its {id} in request params
+      parameters:
+        - name: id
+          in: path
+          description: Payment ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              '0':
+                value: {}
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/payments/create-and-process:
+    post:
+      description: Create and process payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                invoiceRefNumber:
+                  type: string
+            examples:
+              '0':
+                value:
+                  { 'amount': 'amount', 'invoiceRefNumber': 'invoiceRefNumber' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/list:
+    get:
+      description: Get list of all payments
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/edit:
+    post:
+      description: Edit payments with its "_id" in request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                _id:
+                  type: string
+            examples:
+              '0':
+                value: { '_id': 'invoice-id', 'amount': 'amount' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/{id}:
+    get:
+      description: Get invoice data with its {id} in request params
+      parameters:
+        - name: id
+          in: path
+          description: invoice id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/delete:
+    post:
+      description: Delete invoice with its "_id" in request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                _id:
+                  type: string
+            examples:
+              '0':
+                value: { '_id': 'invoice-id', 'amount': 'amount' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/send:
+    post:
+      description: Send invoice with its "id" in request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                id:
+                  type: string
+            examples:
+              '0':
+                value: { 'id': 'invoice-id', 'amount': 'amount' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/create:
+    post:
+      description: Create invoice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                invoiceRefNumber:
+                  type: string
+            examples:
+              '0':
+                value:
+                  { 'amount': 'amount', 'invoiceRefNumber': 'invoiceRefNumber' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
+  /public/invoices/save_and_send:
+    post:
+      description: Save and send invoice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                invoiceRefNumber:
+                  type: string
+            examples:
+              '0':
+                value:
+                  { 'amount': 'amount', 'invoiceRefNumber': 'invoiceRefNumber' }
+      responses:
+        '200':
+          description: Done
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        '401':
+          description: Request with either not existing Integration id or expired/wrong Secret key
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: https://api.stage.fena.co/
+    servers:
+      - url: https://api.stage.fena.co/
